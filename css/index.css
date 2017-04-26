@@ -32,7 +32,6 @@ html,body{
 	color: red;
 	display: none;
 	float: right;
-
 }
 table{
 	width: 100%;
@@ -65,10 +64,10 @@ tbody tr:hover{
 	background: #f2ebeb;
 }
  tbody input[type=button]{
-	width: 60px;
-	height: 30px;
+	width: 50px;
+	height: 25px;
 	background: red;
-	color: #fff;
+	color: #000;
 
 }
 tbody tr.back{
@@ -76,6 +75,22 @@ tbody tr.back{
 	color: #FFF;
 }
 
+tbody input[type='text']{
+	width: 100px;
+	height: 20px;
+	text-align: center;
+	border: none;
+	background: none;
+}
+
 tbody tr.back td input[type='text']{
 	color: #FFF;
+}
+.delAll{
+	width: 100px;
+	height: 30px;
+	background: #999;
+	float: right;
+	border-radius: 4px;
+	margin-top: 10px;
 }

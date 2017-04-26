@@ -14,7 +14,7 @@
 			position: fixed;			
 		}
 		.right{
-			width: 83%;
+			width: 81%;
 			height: 100%;
 			background: white;
 			top:0;
@@ -25,15 +25,12 @@
 			height: 50px;
 			margin-left: 20px;
 			margin-top: 20px;
-
 		}
 		#guide{
 			width:200px; 
 			margin-top: 20px;
-			
-			
+
 		}
-		
 		.guide{
 			width: 200px;
 			height: 40px;

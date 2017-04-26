@@ -75,20 +75,20 @@ $(function () {
             creation: "2016-11-03",
             creator: "三日",
             area: "南京",
-
         },
     ];
+
     // 渲染页面方法
-    function initco(json) {
+    function cour(json) {
         var course = "<tr>" +
-            "<td>" + '<input type="checkbox" name="" value="">' + json.id + "</td>" +
-            "<td>" + json.classify + "</td>" +
-            "<td>" + json.title + "</td>" +
-            "<td>" + json.grade + "</td>" +
-            "<td>" + json.state + "</td>" +
-            "<td>" + json.creation + "</td>" +
-            "<td>" + json.creator + "</td>" +
-            "<td>" + json.area + "</td>" +
+            "<td>" + '<input type="checkbox" name="id" class="selAll2" value="">' + json.id + "</td>" +
+            "<td>" + '<input type="text" value="' + json.classify +'" disabled> '+"</td>" +
+            "<td>" + '<input type="text" value="' + json.title +'" disabled> '+"</td>" +
+            "<td>" + '<input type="text" value="' + json.grade +'" disabled> '+"</td>" +
+            "<td>" + '<input type="text" value="' + json.state +'" disabled> '+"</td>" +
+            "<td>" + '<input type="text" value="' + json.creation +'" disabled> '+"</td>" +
+            "<td>" + '<input type="text" value="' + json.creator +'" disabled> '+"</td>" +
+            "<td>" + '<input type="text" value="' + json.area +'" disabled> '+"</td>" +
             '<td>' +
             '<input type="button" class="del" value="删除" title="' + json.id + '">' +
             "</td>'" +
@@ -96,28 +96,28 @@ $(function () {
         return course;
     }
 
-    //init page渲染页面
-    function initpage(course) {
+    // page渲染页面
+    function page(course) {
         $("tbody").html("");
         $.each(course, function (key, val) {
-            $("tbody").append(initco(val));
+            $("tbody").append(cour(val));
         })
     }
 
-    initpage(course); //调用压面渲染接口/方法
+        page(course); //调用压面渲染接口/方法
 
 
 
-    //按钮删除指定的行
+    // 按钮删除指定的行
     $("body").on("click",".del",function () {
-        var id = parseInt($(this).attr("title"));//强制转化json字符串为数值
-        var ind = $(this).parent("td").parent("tr").index();//获取当前行的index
-        for(var i = 0;i < course.length;i++){
-            if(id == course[i].id){
-               course.splice(i,1);// 删除第i个值，删除一个
-                $("tbody tr").eq(ind).remove();
+            var id = parseInt($(this).attr("title"));//将字符串转化为数值
+            var ind = $(this).parent("td").parent("tr").index();//获取当前行的index
+            for(var i = 0;i < course.length;i++){
+                if(id == course[i].id){
+                    course.splice(i,1);// 删除第i个值，删除一个
+                    $("tbody tr").eq(ind).remove();
+                }
             }
-        }
 
     })
 
@@ -131,9 +131,9 @@ $(function () {
     })
     // 录入方法
     function refreshHtml(course, class_) {
-        course.unshift({
+        course.unshift({   //在第一行增加
             id: nums,
-            classify: $(class_.classify).val(),
+            classify: $(class_.classify).val(),//获取输入框的值
             title: $(class_.title).val(),
             grade: $(class_.grade).val(),
             state: $(class_.state).val(),
@@ -142,12 +142,12 @@ $(function () {
             area: $(class_.area).val(),
         })
 
-        $(".add input[type='text']").val("");
+        $(".add input[type='text']").val("");  //清空输入框
 
-        initpage(course);
+        page(course);  //渲染页面
     }
 
-
+    // 添加内容
     $(".button").on("click", function () {
         nums = nums + 1;
         refreshHtml(course, {
@@ -186,23 +186,34 @@ $(function () {
         fun();
     }
 
-    // size switching
+    // size switching 大小切换
     $(".icons").on("click", function () {
         if ($(this).hasClass("h")) { //反向
             dealList(course, true, function () {
-                initpage(course);
+                page(course);
+                $(".icons").html("&#xe603;");
             })
             $(this).removeClass("h");
         } else {
             // 正向
             dealList(course, false, function () {
-                initpage(course);
+                page(course);
+                $(".icons").html("&#xe646;");
             })
             $(this).addClass("h");
         }
     })
 
-    // The keyboard to delete
+    // 单击修改文本内容
+    $("body").on("click","td",function () {
+        $(this).children("input[type=text]").removeAttr("disabled");
+    })
+    $("body").on("blur","td",function () {
+        $(this).children("input[type=text]").attr("disabled",true);
+    })
+
+
+    // Keyboard click delete selected  键盘点击删除所选
     $("tbody tr").eq(0).addClass("back").siblings("tr").removeClass("back");
 
     $(window).keydown(function (e) {
@@ -210,19 +221,19 @@ $(function () {
         var key = e.keyCode;
         var ind = $("tbody tr.back").index();
         switch (key) {
-            case 38:
+            case 38: //上键盘
                 if(ind > 0){
                     ind --;
                     $("tbody tr").eq(ind).addClass("back").siblings("tr").removeClass("back");
                 }
                 break;
-            case 40:
+            case 40:  //下键盘
                 if(ind < $("tbody tr").length - 1){
                     ind ++;
                     $("tbody tr").eq(ind).addClass("back").siblings("tr").removeClass("back");
                 }
                 break;
-            case 8:
+            case 46:  //delete删除键
                 $("tbody tr.back").remove();
                 if(ind <= $("tbody tr").length - 1){
                     $("tbody tr").eq(ind).addClass("back")
@@ -231,8 +242,38 @@ $(function () {
                     $("tbody tr").eq(ind).addClass("back")
                 }
                 break;
+            case 13: //确认选中回车键
+                // $("tbody tr.back").children().find("input[name=id]").attr("checked","checked");
+                if($("tbody tr.back").children().find("input[name=id]").is(":checked")){
+                    $("tbody tr.back").children().find("input[name=id]").attr("checked",false);
+                } else {
+                    $("tbody tr.back").children().find("input[name=id]").attr("checked",true);
+                }
+                break;
         }
+    })
 
+
+// Selection or cancel the selection 全选或取消全选
+    var status = 0;
+    $(".selAll").on("click",function () {
+        if ($(".selAll").is(":checked")) {
+            $(".selAll2").attr("checked","checked");
+            status = 0;
+        } else {
+            $(".selAll2").removeAttr("checked");
+            status = 1;
+        }
+    })
+
+
+    // Delete the selected item 删除选中项
+    $(".delAll").on("click",function (){
+        $("tbody tr input[type='checkbox']:checked").each(function () {
+            var ind = $(this).parent("td").parent("tr").index();
+            course.splice(ind, 1);
+            $("tbody tr").eq(ind).remove();
+        })
     })
 
 })
