@@ -1,0 +1,56 @@
+		*{
+			padding:0;
+			margin: 0;
+		}
+
+		html,body{
+			height: 100%;
+		}
+
+		.left{
+			width: 240px;
+			height: 100%;
+			background: #333333;
+			position: fixed;			
+		}
+		.right{
+			width: 83%;
+			height: 100%;
+			background: white;
+			top:0;
+			margin-left: 250px;	
+		}
+		img{
+			width: 200px;
+			height: 50px;
+			margin-left: 20px;
+			margin-top: 20px;
+
+		}
+		#guide{
+			width:200px; 
+			margin-top: 20px;
+			
+			
+		}
+		
+		.guide{
+			width: 200px;
+			height: 40px;
+			color: #ffffff;
+			border: 1px solid #999999;
+			font-size: 16px;
+			margin-left: 20px;
+			line-height: 40px;
+			text-align: center;
+			background: #666666;
+		}
+		.guide:hover{
+			background: #999999;
+			color: white;
+		}
+
+		iframe{
+			width: 100%;
+			height: 100%;
+		}
